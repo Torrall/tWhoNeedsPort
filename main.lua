@@ -8,7 +8,7 @@ local distance_threshold = 400
 -- create inverted tables
 local instance_by_inside_id = {}
 local instance_by_outside_id = {}
-for k,v in pairs(ns.instances) do
+for k, v in pairs(ns.instances) do
     for id in v.inside_ids do
         instance_by_inside_id[id] = k
     end
@@ -22,7 +22,7 @@ for k,v in pairs(ns.instances) do
 end
 
 local function evaluate_player_instance(unit)
-    local posY,posX,posZ,instanceID=UnitPosition(unit)
+    local posY, posX, _, instanceID = UnitPosition(unit)
     -- try if the player is inside a known instance
     if instance_by_inside_id[instanceID] ~= nil then
         local instance_key = instance_by_inside_id[instanceID]
@@ -37,11 +37,11 @@ local function evaluate_player_instance(unit)
     -- at least one instance is in the players zone; find the closest one
     local min_distance = 1000000000000
     local closest_instance
-    for _,instance_key in pairs(instance_by_outside_id[instanceID]) do
+    for _, instance_key in pairs(instance_by_outside_id[instanceID]) do
         local instance = ns.instances[instance_key]
         local distance_x = instance.outside_coordinates.x - posX
         local distance_y = instance.outside_coordinates.y - posY
-        local distance = math.sqrt(distance_x^2 + distance_y^2)
+        local distance = math.sqrt(distance_x ^ 2 + distance_y ^ 2)
 
         if distance < min_distance then
             closest_instance = instance
