@@ -90,7 +90,7 @@ end
 
 function get_most_populated_instance(members_by_instance)
     local most_members = 0
-    local most_popular_instance = nil
+    local most_popular_instance
     for k, v in pairs(members_by_instance) do
         if #v > most_members then
             most_members = #v
@@ -111,20 +111,20 @@ function evaluate_summon_status()
     local missing_members = {}
     for instance_key, members in members_by_instance do
         if instance_key ~= most_popular_instance_key then
-            for _,member in ipairs(members) do
+            for _, member in ipairs(members) do
                 missing_members:insert(member)
             end
         end
     end
 
-    return most_popular_instance_key,missing_members
+    return most_popular_instance_key, missing_members
 end
 
 function print_summon_status()
-    local most_popular_instance_key,missing_members = evaluate_summon_status()
+    local most_popular_instance_key, missing_members = evaluate_summon_status()
     local instance = ns.instances[most_popular_instance_key]
-    print("instance:"..instance.name)
-    for k,v in ipairs() do
+    print("instance: ".. instance.name)
+    for k, v in ipairs(missing_members) do
         print(k, v)
     end
 end
@@ -135,7 +135,7 @@ local tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", U
 local accumulator = 0
 local INTERVAL = 0.25  -- seconds
 
-tickerFrame:SetScript("OnUpdate", function(self, elapsed)
+tickerFrame:SetScript("OnUpdate", function(_, elapsed)
     accumulator = accumulator + elapsed
     if accumulator >= INTERVAL then
         accumulator = accumulator - INTERVAL  -- subtract instead of reset to avoid drift
