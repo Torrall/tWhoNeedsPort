@@ -1,9 +1,10 @@
 local addon, ns = ...
 print("read tWhoNeedsPort: main.lua")
 
+addon.internal_name = "tWhoNeedsPort"
 ns.instance = {}
 
-local distance_threshold = 400
+local DISTANCE_THRESHOLD = 400
 
 -- create inverted tables
 local instance_by_inside_id = {}
@@ -21,7 +22,7 @@ for k, v in pairs(ns.instances) do
     end
 end
 
-local function evaluate_player_instance(unit)
+local function evaluate_member_instance(unit)
     local posY, posX, _, instanceID = UnitPosition(unit)
     -- try if the player is inside a known instance
     if instance_by_inside_id[instanceID] ~= nil then
@@ -44,13 +45,59 @@ local function evaluate_player_instance(unit)
         local distance = math.sqrt(distance_x ^ 2 + distance_y ^ 2)
 
         if distance < min_distance then
-            closest_instance = instance
+            closest_instance = instance_key
             min_distance = distance
         end
     end
     -- is the closest close enough?
-    if min_distance > distance_threshold then
+    if min_distance > DISTANCE_THRESHOLD then
         return nil
     end
     return closest_instance
 end
+
+local function get_group_units()
+    local units = {}
+
+    if IsInRaid() then
+        for i = 1, GetNumGroupMembers() do
+            units[#units + 1] = "raid" .. i
+        end
+    elseif IsInGroup() then
+        units[#units + 1] = "player"
+        for i = 1, GetNumGroupMembers() do
+            units[#units + 1] = "party" .. i
+        end
+    else
+        units[#units + 1] = "player"
+    end
+
+    return units
+end
+
+function get_all_member_instances()
+    local members_by_instance = {}
+    for _, unit_id in ipairs(get_group_units()) do
+        local instance_key = evaluate_member_instance(unit_id)
+        if instance_key then
+            local member_name = UnitName(unit_id)
+            members_by_instance = members_by_instance or {}
+            members_by_instance[instance_key].insert(member_name)
+        end
+    end
+end
+
+
+-- add the ticker frame that does the checks
+local tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", UIParent)
+
+local accumulator = 0
+local INTERVAL = 0.25  -- seconds
+
+tickerFrame:SetScript("OnUpdate", function(self, elapsed)
+    accumulator = accumulator + elapsed
+    if accumulator >= INTERVAL then
+        accumulator = accumulator - INTERVAL  -- subtract instead of reset to avoid drift
+        MyAddon_OnTick()
+    end
+end)
