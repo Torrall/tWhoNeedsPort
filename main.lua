@@ -1,7 +1,9 @@
 local addon, ns = ...
 print("read tWhoNeedsPort: main.lua")
 
+addon = {}
 addon.internal_name = "tWhoNeedsPort"
+
 ns.instance = {}
 
 local DISTANCE_THRESHOLD = 400
