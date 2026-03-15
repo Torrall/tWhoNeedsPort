@@ -10,3 +10,13 @@ ns.instances.murder_row = {
         y = 8629.2998046875,
     },
 }
+
+ns.instances.murder_row = {
+    name = "Magister's Terrace",
+    inside_ids = { 2811 },
+    outside_ids = { 0 },
+    outside_coordinates = {
+        x = -4952.1,
+        y = 11646.5,
+    },
+}
