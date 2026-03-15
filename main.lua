@@ -17,7 +17,7 @@ for k, v in pairs(ns.instances) do
         if instance_by_outside_id[id] == nil then
             instance_by_outside_id[id] = {}
         end
-        instance_by_outside_id[id].insert(k)
+        instance_by_outside_id[id]:insert(k)
 
     end
 end
@@ -82,11 +82,52 @@ function get_all_member_instances()
         if instance_key then
             local member_name = UnitName(unit_id)
             members_by_instance = members_by_instance or {}
-            members_by_instance[instance_key].insert(member_name)
+            members_by_instance[instance_key]:insert(member_name)
         end
     end
+    return members_by_instance
 end
 
+function get_most_populated_instance(members_by_instance)
+    local most_members = 0
+    local most_popular_instance = nil
+    for k, v in pairs(members_by_instance) do
+        if #v > most_members then
+            most_members = #v
+            most_popular_instance = k
+        end
+    end
+    return most_popular_instance
+end
+
+function evaluate_summon_status()
+    local members_by_instance = get_all_member_instances()
+    local most_popular_instance_key = get_most_populated_instance(members_by_instance)
+
+    if most_popular_instance_key == nil then
+        return nil, nil
+    end
+
+    local missing_members = {}
+    for instance_key, members in members_by_instance do
+        if instance_key ~= most_popular_instance_key then
+            for _,member in ipairs(members) do
+                missing_members:insert(member)
+            end
+        end
+    end
+
+    return most_popular_instance_key,missing_members
+end
+
+function print_summon_status()
+    local most_popular_instance_key,missing_members = evaluate_summon_status()
+    local instance = ns.instances[most_popular_instance_key]
+    print("instance:"..instance.name)
+    for k,v in ipairs() do
+        print(k, v)
+    end
+end
 
 -- add the ticker frame that does the checks
 local tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", UIParent)
@@ -98,6 +139,6 @@ tickerFrame:SetScript("OnUpdate", function(self, elapsed)
     accumulator = accumulator + elapsed
     if accumulator >= INTERVAL then
         accumulator = accumulator - INTERVAL  -- subtract instead of reset to avoid drift
-        MyAddon_OnTick()
+        print_summon_status()
     end
 end)
