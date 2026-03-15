@@ -4,8 +4,6 @@ print("read tWhoNeedsPort: main.lua")
 addon = {}
 addon.internal_name = "tWhoNeedsPort"
 
-ns.instance = {}
-
 local DISTANCE_THRESHOLD = 400
 
 -- create inverted tables
@@ -123,6 +121,7 @@ function evaluate_summon_status()
 end
 
 function print_summon_status()
+    print("check instance")
     local most_popular_instance_key, missing_members = evaluate_summon_status()
     local instance = ns.instances[most_popular_instance_key]
     print("instance: ".. instance.name)

@@ -1,6 +1,8 @@
 local addon, ns = ...
 print("read tWhoNeedsPort midnight_season_1.lua")
 
+ns.instances = ns.instances or {}
+
 ns.instances.murder_row = {
     name = "Murder Row",
     inside_ids = { 2813 },
