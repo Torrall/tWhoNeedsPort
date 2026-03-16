@@ -158,12 +158,12 @@ function print_summon_status()
 end
 
 -- add the ticker frame that does the checks
-local tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", UIParent)
+addon.tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", UIParent)
 
 local accumulator = 0
 local INTERVAL = 1.0  -- seconds
 
-tickerFrame:SetScript("OnUpdate", function(_, elapsed)
+addon.tickerFrame:SetScript("OnUpdate", function(_, elapsed)
     accumulator = accumulator + elapsed
     if accumulator >= INTERVAL then
         accumulator = accumulator - INTERVAL  -- subtract instead of reset to avoid drift
@@ -172,30 +172,64 @@ tickerFrame:SetScript("OnUpdate", function(_, elapsed)
 end)
 
 -- Set up the displayFrame
-local displayFrame = CreateFrame("Frame", addon.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
-displayFrame:SetSize(300, 200)
-displayFrame:SetPoint("CENTER")
+addon.DisplayFrame = CreateFrame("Frame", addon.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
+addon.DisplayFrame:SetSize(300, 200)
+addon.DisplayFrame:SetPoint("CENTER")
 
 -- Text child
-local displayText = displayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-displayText:SetPoint("TOPLEFT", displayFrame, "TOPLEFT", 8, -8)
-displayText:SetPoint("BOTTOMRIGHT", displayFrame, "BOTTOMRIGHT", -8, 8)
+local displayText = addon.DisplayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+displayText:SetPoint("TOPLEFT", addon.DisplayFrame, "TOPLEFT", 8, -8)
+displayText:SetPoint("BOTTOMRIGHT", addon.DisplayFrame, "BOTTOMRIGHT", -8, 8)
 displayText:SetJustifyH("LEFT")
 displayText:SetJustifyV("TOP")
 
 -- Shift+left-click to move
-displayFrame:EnableMouse(true)
-displayFrame:SetScript("OnMouseDown", function(self, button)
+addon.DisplayFrame:EnableMouse(true)
+addon.DisplayFrame:SetScript("OnMouseDown", function(self, button)
     if button == "LeftButton" and IsShiftKeyDown() then
         self:StartMoving()
     end
 end)
-displayFrame:SetScript("OnMouseUp", function(self)
+addon.DisplayFrame:SetScript("OnMouseUp", function(self)
     self:StopMovingOrSizing()
 end)
-displayFrame:SetMovable(true)
+addon.DisplayFrame:SetMovable(true)
 
 -- Public setter
 function addon.SetDisplayText(lines)
     displayText:SetText(table.concat(lines, "\n"))
 end
+
+-- load/unload
+local function should_be_active()
+    if InCombatLockdown() then return false end
+    if not IsInGroup() then return false end
+
+    local _, instanceType, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
+    if difficultyID ~= 8 then return false end -- M+
+
+    return true
+end
+
+local function set_addon_active(active)
+    if active then
+        addon.DisplayFrame:Show()
+        addon.tickerFrame:Show()
+    else
+        addon.DisplayFrame:Hide()
+        addon.tickerFrame:Hide()
+    end
+end
+
+local stateFrame = CreateFrame("Frame")
+stateFrame:RegisterEvent("PLAYER_REGEN_DISABLED")   -- combat enter
+stateFrame:RegisterEvent("PLAYER_REGEN_ENABLED")    -- combat leave
+stateFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+stateFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+
+stateFrame:SetScript("OnEvent", function()
+    set_addon_active(should_be_active())
+end)
+
+-- Evaluate on load too
+set_addon_active(should_be_active())
