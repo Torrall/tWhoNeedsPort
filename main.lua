@@ -138,6 +138,7 @@ end
 
 local debug_counter = 0
 function print_summon_status()
+    print("check summon")
     local lines = {}
     debug_counter = debug_counter + 1
     table.insert(lines, "debug-counter: "..debug_counter)
@@ -161,7 +162,7 @@ end
 addon.tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", UIParent)
 
 local accumulator = 0
-local INTERVAL = 1.0  -- seconds
+local INTERVAL = 0.25  -- seconds
 
 addon.tickerFrame:SetScript("OnUpdate", function(_, elapsed)
     accumulator = accumulator + elapsed
