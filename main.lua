@@ -25,7 +25,7 @@ local function evaluate_member_instance(unit)
     -- try if the player is inside a known instance
     if instance_by_inside_id[instanceID] ~= nil then
         local instance_key = instance_by_inside_id[instanceID]
-        return ns.instances[instance_key]
+        return instance_key
     end
 
     -- player is not in a known instance, exit if no instances are registered to their zone
@@ -103,7 +103,7 @@ function evaluate_summon_status()
     local most_popular_instance_key = get_most_populated_instance(members_by_instance)
 
     if most_popular_instance_key == NO_INSTANCE_KEY then
-        return nil, nil
+        return most_popular_instance_key, nil
     end
 
     local missing_members = {}
@@ -119,17 +119,20 @@ function evaluate_summon_status()
 end
 
 function print_summon_status()
-    print("check instance")
+    local lines = {}
     local most_popular_instance_key, missing_members = evaluate_summon_status()
-    if most_popular_instance_key == nil then
-        print("no one is at a known instance")
+    if most_popular_instance_key == NO_INSTANCE_KEY then
+        table.insert(lines,"no one is at a known instance")
+        addon.SetDisplayText(lines)
         return
     end
     local instance = ns.instances[most_popular_instance_key]
-    print("instance: " .. instance.name)
-    for k, v in ipairs(missing_members) do
-        print(k, v)
+    table.insert(lines,"Instance: " .. instance.name)
+    for _, v in ipairs(missing_members) do
+        table.insert(lines,v)
     end
+    addon.SetDisplayText(lines)
+
 end
 
 -- add the ticker frame that does the checks
@@ -145,3 +148,40 @@ tickerFrame:SetScript("OnUpdate", function(_, elapsed)
         print_summon_status()
     end
 end)
+
+-- Set up the displayFrame
+local displayFrame = CreateFrame("Frame", "MyAddonDisplayFrame", UIParent, "BackdropTemplate")
+displayFrame:SetSize(300, 200)
+displayFrame:SetPoint("CENTER")
+displayFrame:SetBackdrop({
+    bgFile   = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile     = true, tileSize = 16, edgeSize = 16,
+    insets   = { left = 4, right = 4, top = 4, bottom = 4 }
+})
+displayFrame:SetBackdropColor(0, 0, 0, 0.8)
+displayFrame:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+
+-- Text child
+local displayText = displayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+displayText:SetPoint("TOPLEFT", displayFrame, "TOPLEFT", 8, -8)
+displayText:SetPoint("BOTTOMRIGHT", displayFrame, "BOTTOMRIGHT", -8, 8)
+displayText:SetJustifyH("LEFT")
+displayText:SetJustifyV("TOP")
+
+-- Shift+left-click to move
+displayFrame:EnableMouse(true)
+displayFrame:SetScript("OnMouseDown", function(self, button)
+    if button == "LeftButton" and IsShiftKeyDown() then
+        self:StartMoving()
+    end
+end)
+displayFrame:SetScript("OnMouseUp", function(self)
+    self:StopMovingOrSizing()
+end)
+displayFrame:SetMovable(true)
+
+-- Public setter
+function addon.SetDisplayText(lines)
+    displayText:SetText(table.concat(lines, "\n"))
+end

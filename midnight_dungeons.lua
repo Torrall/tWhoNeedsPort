@@ -1,5 +1,5 @@
-local addon, ns = ...
-print("read tWhoNeedsPort midnight_season_1.lua")
+local _, ns = ...
+print("read tWhoNeedsPort midnight_dungeons.lua")
 
 ns.instances = ns.instances or {}
 
