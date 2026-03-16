@@ -23,6 +23,18 @@ ns.instances.the_dreamrift = {
     },
 }
 
+ns.instances.march_on_quel_danas = {
+    name = "March on Quel'Danas",
+    inside_ids = { 99999 },
+    outside_ids = { 0 },
+    outside_coordinates = {
+        x = -4582.8999023438,
+        y = 10077.700195312,
+    },
+}
+
+--[[
+
 ns.instances.template_raid = {
     name = "template-raid",
     inside_ids = { 99999 },
@@ -32,3 +44,5 @@ ns.instances.template_raid = {
         y = 0.0,
     },
 }
+
+]]

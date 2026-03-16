@@ -83,12 +83,16 @@ ns.instances.den_of_nalorakk = {
     },
 }
 
---ns.instances.template_dungeon = {
---    name = "template-dungeon",
---    inside_ids = { 99999 },
---    outside_ids = { 99999 },
---    outside_coordinates = {
---        x = 0.0,
---        y = 0.0,
---    },
---}
+--[[
+
+ns.instances.template_dungeon = {
+    name = "template-dungeon",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}
+
+]]
