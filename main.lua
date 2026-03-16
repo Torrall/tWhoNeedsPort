@@ -206,8 +206,8 @@ local function should_be_active()
     if InCombatLockdown() then return false end
     if not IsInGroup() then return false end
 
-    local _, instanceType, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
-    if difficultyID ~= 8 then return false end -- M+
+    local _, _, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
+    if difficultyID == 8 then return false end -- M+
 
     return true
 end
