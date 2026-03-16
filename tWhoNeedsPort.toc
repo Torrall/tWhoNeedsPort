@@ -4,8 +4,8 @@
 ## Title: |cfc7D26CDt|caf800080Who Needs Port
 ## DefaultState: Enabled
 
-midnight_dungeons.lua
-midnight_raids.lua
-midnight_season_1.lua
+locations\midnight_dungeons.lua
+locations\midnight_raids.lua
+locations\midnight_season_1.lua
 main.lua
 
