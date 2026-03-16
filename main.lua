@@ -78,9 +78,8 @@ function get_all_member_instances()
     for _, unit_id in ipairs(get_group_units()) do
         local instance_key = evaluate_member_instance(unit_id)
 
-        local member_name = UnitName(unit_id)
         members_by_instance[instance_key] = members_by_instance[instance_key] or {}
-        table.insert(members_by_instance[instance_key], member_name)
+        table.insert(members_by_instance[instance_key], unit_id)
 
     end
     return members_by_instance
@@ -90,19 +89,22 @@ function get_most_populated_instance(members_by_instance)
     local most_members = 0
     local most_popular_instance
     for k, v in pairs(members_by_instance) do
-        if #v > most_members then
+        if #v > most_members and k ~= NO_INSTANCE_KEY then
             most_members = #v
             most_popular_instance = k
         end
     end
+    if most_members == 0 then
+        return nil
+    end
     return most_popular_instance
 end
 
-function evaluate_summon_status()
+function evaluate_location_status()
     local members_by_instance = get_all_member_instances()
     local most_popular_instance_key = get_most_populated_instance(members_by_instance)
 
-    if most_popular_instance_key == NO_INSTANCE_KEY then
+    if most_popular_instance_key == nil then --no one is at any instance
         return most_popular_instance_key, nil
     end
 
@@ -118,18 +120,38 @@ function evaluate_summon_status()
     return most_popular_instance_key, missing_members
 end
 
+local function get_class_colored_name(unitID)
+    local name = GetUnitName(unitID, false)
+    local _, class = UnitClass(unitID)
+    local color = RAID_CLASS_COLORS[class]
+
+    if not name or not color then
+        return name or unitID
+    end
+
+    return string.format("|cff%02x%02x%02x%s|r",
+            color.r * 255,
+            color.g * 255,
+            color.b * 255,
+            name)
+end
+
+local debug_counter = 0
 function print_summon_status()
     local lines = {}
-    local most_popular_instance_key, missing_members = evaluate_summon_status()
+    debug_counter = debug_counter + 1
+    table.insert(lines, "debug-counter: "..debug_counter)
+
+    local most_popular_instance_key, missing_members = evaluate_location_status()
     if most_popular_instance_key == NO_INSTANCE_KEY then
-        table.insert(lines,"no one is at a known instance")
+        table.insert(lines,"No one is at a known instance")
         addon.SetDisplayText(lines)
         return
     end
     local instance = ns.instances[most_popular_instance_key]
     table.insert(lines,"Instance: " .. instance.name)
-    for _, v in ipairs(missing_members) do
-        table.insert(lines,v)
+    for _, id in ipairs(missing_members) do
+        table.insert(lines,get_class_colored_name(id))
     end
     addon.SetDisplayText(lines)
 
