@@ -104,8 +104,8 @@ function evaluate_location_status()
     local members_by_instance = get_all_member_instances()
     local most_popular_instance_key = get_most_populated_instance(members_by_instance)
 
-    if most_popular_instance_key == nil then --no one is at any instance
-        return most_popular_instance_key, nil
+    if not most_popular_instance_key then --no one is at any instance
+        return nil, nil
     end
 
     local missing_members = {}
@@ -143,7 +143,7 @@ function print_summon_status()
     table.insert(lines, "debug-counter: "..debug_counter)
 
     local most_popular_instance_key, missing_members = evaluate_location_status()
-    if most_popular_instance_key == NO_INSTANCE_KEY then
+    if not most_popular_instance_key then
         table.insert(lines,"No one is at a known instance")
         addon.SetDisplayText(lines)
         return
@@ -175,14 +175,6 @@ end)
 local displayFrame = CreateFrame("Frame", addon.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
 displayFrame:SetSize(300, 200)
 displayFrame:SetPoint("CENTER")
---displayFrame:SetBackdrop({
---    bgFile   = "Interface/Tooltips/UI-Tooltip-Background",
---    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
---    tile     = true, tileSize = 16, edgeSize = 16,
---    insets   = { left = 4, right = 4, top = 4, bottom = 4 }
---})
---displayFrame:SetBackdropColor(0, 0, 0, 0.8)
---displayFrame:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
 
 -- Text child
 local displayText = displayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
