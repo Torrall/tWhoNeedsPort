@@ -48,17 +48,47 @@ ns.instances.voidscar_arena = {
     inside_ids = { 2923 },
     outside_ids = { 2771 },
     outside_coordinates = {
-        x = -458.30001831055 ,
-        y =  4371.2001953125 ,d
+        x = -458.30001831055,
+        y = 4371.2001953125, d
     },
 }
 
-ns.instances.template_dungeon = {
-    name = "template-dungeon",
-    inside_ids = { 99999 },
-    outside_ids = { 99999 },
+ns.instances.blinding_vale = {
+    name = "The Blinding Vale",
+    inside_ids = { 2859 },
+    outside_ids = { 2694 },
     outside_coordinates = {
-        x = 0.0,
-        y = 0.0,
+        x = 1500.0999755859,
+        y = -1397.0999755859,
     },
 }
+
+ns.instances.maisara_caverns = {
+    name = "Maisara Caverns",
+    inside_ids = { 2874 },
+    outside_ids = { 0 },
+    outside_coordinates = {
+        x = -7595.2001953125,
+        y = 5951.3999023438,
+    },
+}
+
+ns.instances.den_of_nalorakk = {
+    name = "Den of Nalorakk",
+    inside_ids = { 2825 },
+    outside_ids = { 0 },
+    outside_coordinates = {
+        x = -6402.8999023438,
+        y = 3280.8000488281,
+    },
+}
+
+--ns.instances.template_dungeon = {
+--    name = "template-dungeon",
+--    inside_ids = { 99999 },
+--    outside_ids = { 99999 },
+--    outside_coordinates = {
+--        x = 0.0,
+--        y = 0.0,
+--    },
+--}

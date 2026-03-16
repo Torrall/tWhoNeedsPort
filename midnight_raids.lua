@@ -16,10 +16,19 @@ ns.instances.the_voidspire = {
 ns.instances.the_dreamrift = {
     name = "The Dreamrift",
     inside_ids = { 99999 },
-    outside_ids = { 99999 },
+    outside_ids = { 2694 },
     outside_coordinates = {
-        x = 0,
-        y = 0,
+        x = -1083,
+        y = -636.5,
     },
 }
 
+ns.instances.template_raid = {
+    name = "template-raid",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}
