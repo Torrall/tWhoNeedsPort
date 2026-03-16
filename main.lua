@@ -136,12 +136,8 @@ local function get_class_colored_name(unitID)
             name)
 end
 
-local debug_counter = 0
 function print_summon_status()
-    print("check summon")
     local lines = {}
-    debug_counter = debug_counter + 1
-    table.insert(lines, "debug-counter: "..debug_counter)
 
     local most_popular_instance_key, missing_members = evaluate_location_status()
     if not most_popular_instance_key then
@@ -202,8 +198,9 @@ function addon.SetDisplayText(lines)
 end
 
 -- load/unload
-local function should_be_active()
+local function should_be_active(event)
     if InCombatLockdown() then return false end
+    if event == "PLAYER_REGEN_DISABLED" then return false end
     if not IsInGroup() then return false end
 
     local _, _, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
@@ -228,8 +225,8 @@ stateFrame:RegisterEvent("PLAYER_REGEN_ENABLED")    -- combat leave
 stateFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 stateFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
-stateFrame:SetScript("OnEvent", function()
-    set_addon_active(should_be_active())
+stateFrame:SetScript("OnEvent", function(_,event)
+    set_addon_active(should_be_active(event))
 end)
 
 -- Evaluate on load too
