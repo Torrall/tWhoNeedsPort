@@ -172,17 +172,17 @@ tickerFrame:SetScript("OnUpdate", function(_, elapsed)
 end)
 
 -- Set up the displayFrame
-local displayFrame = CreateFrame("Frame", "MyAddonDisplayFrame", UIParent, "BackdropTemplate")
+local displayFrame = CreateFrame("Frame", addon.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
 displayFrame:SetSize(300, 200)
 displayFrame:SetPoint("CENTER")
-displayFrame:SetBackdrop({
-    bgFile   = "Interface/Tooltips/UI-Tooltip-Background",
-    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-    tile     = true, tileSize = 16, edgeSize = 16,
-    insets   = { left = 4, right = 4, top = 4, bottom = 4 }
-})
-displayFrame:SetBackdropColor(0, 0, 0, 0.8)
-displayFrame:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+--displayFrame:SetBackdrop({
+--    bgFile   = "Interface/Tooltips/UI-Tooltip-Background",
+--    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+--    tile     = true, tileSize = 16, edgeSize = 16,
+--    insets   = { left = 4, right = 4, top = 4, bottom = 4 }
+--})
+--displayFrame:SetBackdropColor(0, 0, 0, 0.8)
+--displayFrame:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
 
 -- Text child
 local displayText = displayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
