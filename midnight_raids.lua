@@ -6,10 +6,10 @@ ns.instances = ns.instances or {}
 ns.instances.the_voidspire = {
     name = "The Voidspire",
     inside_ids = { 99999 },
-    outside_ids = { 99999 },
+    outside_ids = { 2771 },
     outside_coordinates = {
-        x = 0,
-        y = 0,
+        x = 252.69999694824,
+        y = 1219.0999755859,
     },
 }
 
@@ -22,3 +22,4 @@ ns.instances.the_dreamrift = {
         y = 0,
     },
 }
+

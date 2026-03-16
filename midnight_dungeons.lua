@@ -32,3 +32,33 @@ ns.instances.windrunner_spire = {
         y = 5206.7001953125,
     },
 }
+
+ns.instances.nexus_point_xenas = {
+    name = "Nexus-Point Xenas",
+    inside_ids = { 2915 },
+    outside_ids = { 2771 },
+    outside_coordinates = {
+        x = -1786.3000488281,
+        y = 1471.0,
+    },
+}
+
+ns.instances.voidscar_arena = {
+    name = "Voidscar Arena",
+    inside_ids = { 2923 },
+    outside_ids = { 2771 },
+    outside_coordinates = {
+        x = -458.30001831055 ,
+        y =  4371.2001953125 ,d
+    },
+}
+
+ns.instances.template_dungeon = {
+    name = "template-dungeon",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}

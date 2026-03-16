@@ -63,7 +63,7 @@ local function get_group_units()
         end
     elseif IsInGroup() then
         units[#units + 1] = "player"
-        for i = 1, GetNumGroupMembers() do
+        for i = 1, (GetNumGroupMembers() -1) do
             units[#units + 1] = "party" .. i
         end
     else
