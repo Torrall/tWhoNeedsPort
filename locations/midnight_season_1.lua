@@ -15,11 +15,11 @@ ns.instances.seat_of_the_triumvirate = {
 
 ns.instances.algethar_academy = {
     name = "Algeth'ar Academy",
-    inside_ids = { 99999 },
-    outside_ids = { 99999 },
+    inside_ids = { 2526 },
+    outside_ids = { 2444 },
     outside_coordinates = {
-        x = 0.0,
-        y = 0.0,
+        x = -2777.1999511719,
+        y = 1343.9000244141,
     },
 }
 
