@@ -73,7 +73,7 @@ local function get_group_units()
     return units
 end
 
-function get_all_member_instances()
+local function get_all_member_instances()
     local members_by_instance = {}
     for _, unit_id in ipairs(get_group_units()) do
         local instance_key = evaluate_member_instance(unit_id)
@@ -85,7 +85,7 @@ function get_all_member_instances()
     return members_by_instance
 end
 
-function get_most_populated_instance(members_by_instance)
+local function get_most_populated_instance(members_by_instance)
     local most_members = 0
     local most_popular_instance
     for k, v in pairs(members_by_instance) do
@@ -100,7 +100,7 @@ function get_most_populated_instance(members_by_instance)
     return most_popular_instance
 end
 
-function evaluate_location_status()
+local function evaluate_location_status()
     local members_by_instance = get_all_member_instances()
     local most_popular_instance_key = get_most_populated_instance(members_by_instance)
 
@@ -136,7 +136,7 @@ local function get_class_colored_name(unitID)
             name)
 end
 
-function print_summon_status()
+local function print_summon_status()
     local lines = {}
 
     local most_popular_instance_key, missing_members = evaluate_location_status()
@@ -148,7 +148,7 @@ function print_summon_status()
     local instance = ns.instances[most_popular_instance_key]
     table.insert(lines,"Instance: " .. instance.name)
     for _, id in ipairs(missing_members) do
-        table.insert(lines,get_class_colored_name(id))
+        table.insert(lines,get_class_colored_name(id)..""..addon.get_summon_status_string(id))
     end
     addon.SetDisplayText(lines)
 
