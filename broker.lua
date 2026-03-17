@@ -8,7 +8,7 @@ if LDB then
         type  = "data source",
         label = ns.internal_name,
         text  = ns.internal_name,
-        icon  = "Interface\\Icons\\INV_Misc_MeetingStone_01",
+        icon  = "Interface\\Icons\\Inv12_ability_warlock_ritualofsummoning",
 
         OnClick = function(_, button)
             if button == "LeftButton" then
