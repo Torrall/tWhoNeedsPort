@@ -3,10 +3,12 @@
 ## Version: 100000.0
 ## Title: |cfc7D26CDt|caf800080Who Needs Port
 ## DefaultState: Enabled
+## OptionalDeps: LibDataBroker-1.1
 
 locations\midnight_dungeons.lua
 locations\midnight_raids.lua
 locations\midnight_season_1.lua
 main.lua
 port_status.lua
+broker.lua
 

@@ -2,9 +2,11 @@ local addon, ns = ...
 print("read "..addon..": main.lua")
 
 ns.internal_name = addon
+ns.manual_active = false
 
 local DISTANCE_THRESHOLD = 400
 local NO_INSTANCE_KEY = "NO_INSTANCE"
+local NO_EVENT = "NO_EVENT"
 
 -- create inverted tables
 local instance_by_inside_id = {}
@@ -198,7 +200,9 @@ end
 
 -- load/unload
 local function should_be_active(event)
+    if not(ns.manual_active) then return false end
     if InCombatLockdown() then return false end
+    event = event or NO_EVENT
     if event == "PLAYER_REGEN_DISABLED" then return false end
     if not IsInGroup() then return false end
 
@@ -208,7 +212,7 @@ local function should_be_active(event)
     return true
 end
 
-local function set_addon_active(active)
+function set_addon_active(active)
     if active then
         ns.DisplayFrame:Show()
         ns.tickerFrame:Show()
@@ -218,6 +222,10 @@ local function set_addon_active(active)
     end
 end
 
+function ns.check_and_set_active_status(event)
+    set_addon_active(should_be_active(event))
+end
+
 local stateFrame = CreateFrame("Frame")
 stateFrame:RegisterEvent("PLAYER_REGEN_DISABLED")   -- combat enter
 stateFrame:RegisterEvent("PLAYER_REGEN_ENABLED")    -- combat leave
@@ -225,8 +233,8 @@ stateFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 stateFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
 stateFrame:SetScript("OnEvent", function(_,event)
-    set_addon_active(should_be_active(event))
+    ns.check_and_set_active_status(event)
 end)
 
 -- Evaluate on load too
-set_addon_active(should_be_active())
+ns.check_and_set_active_status()
