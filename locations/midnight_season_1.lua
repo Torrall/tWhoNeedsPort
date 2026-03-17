@@ -1,4 +1,58 @@
 local addon, ns = ...
-print("read "..addon..": midnight_season_1.lua")
+print("read " .. addon .. ": midnight_season_1.lua")
 
 ns.instances = ns.instances or {}
+
+ns.instances.seat_of_the_triumvirate = {
+    name = "Seat of the Triumvirate",
+    inside_ids = { 99999 },
+    outside_ids = { 1669 },
+    outside_coordinates = {
+        x = 10836.100585938,
+        y = 5396.3002929688,
+    },
+}
+
+ns.instances.algethar_academy = {
+    name = "Algeth'ar Academy",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}
+
+ns.instances.skyreach = {
+    name = "Skyreach",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}
+
+ns.instances.pit_of_saron = {
+    name = "Pit of Saron",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}
+
+--[[
+
+ns.instances.template_dungeon = {
+    name = "template-dungeon",
+    inside_ids = { 99999 },
+    outside_ids = { 99999 },
+    outside_coordinates = {
+        x = 0.0,
+        y = 0.0,
+    },
+}
+
+]]
