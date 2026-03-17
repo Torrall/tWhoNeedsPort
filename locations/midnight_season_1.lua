@@ -25,11 +25,11 @@ ns.instances.algethar_academy = {
 
 ns.instances.skyreach = {
     name = "Skyreach",
-    inside_ids = { 99999 },
-    outside_ids = { 99999 },
+    inside_ids = { 1209 },
+    outside_ids = { 1116 },
     outside_coordinates = {
-        x = 0.0,
-        y = 0.0,
+        x = 2526.1999511719,
+        y = 31.10000038147,
     },
 }
 
