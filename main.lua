@@ -1,8 +1,7 @@
 local addon, ns = ...
-print("read tWhoNeedsPort: main.lua")
+print("read "..addon..": main.lua")
 
-addon = {}
-addon.internal_name = "tWhoNeedsPort"
+ns.internal_name = addon
 
 local DISTANCE_THRESHOLD = 400
 local NO_INSTANCE_KEY = "NO_INSTANCE"
@@ -142,25 +141,25 @@ local function print_summon_status()
     local most_popular_instance_key, missing_members = evaluate_location_status()
     if not most_popular_instance_key then
         table.insert(lines,"No one is at a known instance")
-        addon.SetDisplayText(lines)
+        ns.SetDisplayText(lines)
         return
     end
     local instance = ns.instances[most_popular_instance_key]
     table.insert(lines,"Instance: " .. instance.name)
     for _, id in ipairs(missing_members) do
-        table.insert(lines,get_class_colored_name(id)..""..addon.get_summon_status_string(id))
+        table.insert(lines,get_class_colored_name(id)..""..ns.GetSummonStatusString(id))
     end
-    addon.SetDisplayText(lines)
+    ns.SetDisplayText(lines)
 
 end
 
 -- add the ticker frame that does the checks
-addon.tickerFrame = CreateFrame("Frame", addon.internal_name .. "TickerFrame", UIParent)
+ns.tickerFrame = CreateFrame("Frame", ns.internal_name .. "TickerFrame", UIParent)
 
 local accumulator = 0
 local INTERVAL = 0.25  -- seconds
 
-addon.tickerFrame:SetScript("OnUpdate", function(_, elapsed)
+ns.tickerFrame:SetScript("OnUpdate", function(_, elapsed)
     accumulator = accumulator + elapsed
     if accumulator >= INTERVAL then
         accumulator = accumulator - INTERVAL  -- subtract instead of reset to avoid drift
@@ -169,31 +168,31 @@ addon.tickerFrame:SetScript("OnUpdate", function(_, elapsed)
 end)
 
 -- Set up the displayFrame
-addon.DisplayFrame = CreateFrame("Frame", addon.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
-addon.DisplayFrame:SetSize(300, 200)
-addon.DisplayFrame:SetPoint("CENTER")
+ns.DisplayFrame = CreateFrame("Frame", ns.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
+ns.DisplayFrame:SetSize(300, 200)
+ns.DisplayFrame:SetPoint("CENTER")
 
 -- Text child
-local displayText = addon.DisplayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-displayText:SetPoint("TOPLEFT", addon.DisplayFrame, "TOPLEFT", 8, -8)
-displayText:SetPoint("BOTTOMRIGHT", addon.DisplayFrame, "BOTTOMRIGHT", -8, 8)
+local displayText = ns.DisplayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+displayText:SetPoint("TOPLEFT", ns.DisplayFrame, "TOPLEFT", 8, -8)
+displayText:SetPoint("BOTTOMRIGHT", ns.DisplayFrame, "BOTTOMRIGHT", -8, 8)
 displayText:SetJustifyH("LEFT")
 displayText:SetJustifyV("TOP")
 
 -- Shift+left-click to move
-addon.DisplayFrame:EnableMouse(true)
-addon.DisplayFrame:SetScript("OnMouseDown", function(self, button)
+ns.DisplayFrame:EnableMouse(true)
+ns.DisplayFrame:SetScript("OnMouseDown", function(self, button)
     if button == "LeftButton" and IsShiftKeyDown() then
         self:StartMoving()
     end
 end)
-addon.DisplayFrame:SetScript("OnMouseUp", function(self)
+ns.DisplayFrame:SetScript("OnMouseUp", function(self)
     self:StopMovingOrSizing()
 end)
-addon.DisplayFrame:SetMovable(true)
+ns.DisplayFrame:SetMovable(true)
 
 -- Public setter
-function addon.SetDisplayText(lines)
+function ns.SetDisplayText(lines)
     displayText:SetText(table.concat(lines, "\n"))
 end
 
@@ -201,7 +200,7 @@ end
 local function should_be_active(event)
     if InCombatLockdown() then return false end
     if event == "PLAYER_REGEN_DISABLED" then return false end
-    if not IsInGroup() then return false end
+    --if not IsInGroup() then return false end
 
     local _, _, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
     if difficultyID == 8 then return false end -- M+
@@ -211,11 +210,11 @@ end
 
 local function set_addon_active(active)
     if active then
-        addon.DisplayFrame:Show()
-        addon.tickerFrame:Show()
+        ns.DisplayFrame:Show()
+        ns.tickerFrame:Show()
     else
-        addon.DisplayFrame:Hide()
-        addon.tickerFrame:Hide()
+        ns.DisplayFrame:Hide()
+        ns.tickerFrame:Hide()
     end
 end
 

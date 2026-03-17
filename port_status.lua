@@ -1,4 +1,5 @@
-local addon = ...
+local addon, ns = ...
+print("read "..addon..": port_status.lua")
 
 local status_list = {}
 
@@ -53,7 +54,7 @@ local function eval_summon_status(unitID)
     end
 end
 
-function addon.get_summon_status_string(unitID)
-    local status = eval_summon_status()
+function ns.GetSummonStatusString(unitID)
+    local status = eval_summon_status(unitID)
     return STRING_MAPPING[status]
 end
