@@ -212,7 +212,6 @@ local function should_be_active(event)
     if InCombatLockdown() then return false end
     event = event or NO_EVENT
     if event == "PLAYER_REGEN_DISABLED" then return false end
-    --if not IsInGroup() then return false end
 
     local _, _, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
     if difficultyID == 8 then return false end -- M+
