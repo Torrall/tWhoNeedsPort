@@ -173,6 +173,14 @@ end)
 ns.DisplayFrame = CreateFrame("Frame", ns.internal_name.."DisplayFrame", UIParent, "BackdropTemplate")
 ns.DisplayFrame:SetSize(300, 200)
 ns.DisplayFrame:SetPoint("CENTER")
+ns.DisplayFrame:SetBackdrop({
+    bgFile   = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile     = true, tileSize = 16, edgeSize = 16,
+    insets   = { left = 4, right = 4, top = 4, bottom = 4 }
+})
+ns.DisplayFrame:SetBackdropColor(0, 0, 0, 0.8)
+ns.DisplayFrame:SetBackdropBorderColor(0.4, 0.4, 0.4, 0.0)
 
 -- Text child
 local displayText = ns.DisplayFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -204,7 +212,7 @@ local function should_be_active(event)
     if InCombatLockdown() then return false end
     event = event or NO_EVENT
     if event == "PLAYER_REGEN_DISABLED" then return false end
-    if not IsInGroup() then return false end
+    --if not IsInGroup() then return false end
 
     local _, _, _, _, _, _, _, _, _, _, _, _, difficultyID = GetInstanceInfo()
     if difficultyID == 8 then return false end -- M+
