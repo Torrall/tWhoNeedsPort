@@ -35,11 +35,11 @@ ns.instances.skyreach = {
 
 ns.instances.pit_of_saron = {
     name = "Pit of Saron",
-    inside_ids = { 99999 },
-    outside_ids = { 99999 },
+    inside_ids = { 658 },
+    outside_ids = { 571 },
     outside_coordinates = {
-        x = 0.0,
-        y = 0.0,
+        x = 2024.0999755859,
+        y = 5613.3999023438,
     },
 }
 
