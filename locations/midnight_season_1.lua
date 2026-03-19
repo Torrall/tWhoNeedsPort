@@ -5,7 +5,7 @@ ns.instances = ns.instances or {}
 
 ns.instances.seat_of_the_triumvirate = {
     name = "Seat of the Triumvirate",
-    inside_ids = { 99999 },
+    inside_ids = { 1753 },
     outside_ids = { 1669 },
     outside_coordinates = {
         x = 10836.100585938,

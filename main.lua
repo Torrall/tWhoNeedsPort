@@ -149,7 +149,7 @@ local function print_summon_status()
     local instance = ns.instances[most_popular_instance_key]
     table.insert(lines,"Instance: " .. instance.name)
     for _, id in ipairs(missing_members) do
-        table.insert(lines,get_class_colored_name(id)..""..ns.GetSummonStatusString(id))
+        table.insert(lines,get_class_colored_name(id))
     end
     ns.SetDisplayText(lines)
 
