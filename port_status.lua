@@ -13,8 +13,8 @@ local SUMMON_ACCEPTED = "SUMMON_ACCEPTED"
 
 local STRING_MAPPING = {
     NO_SUMMON = "",
-    SUMMON_PENDING = "|cff888888pending|r",
-    SUMMON_ACCEPTED = "|cff888888accepted|r",
+    SUMMON_PENDING = "|cff888888(Pending)|r",
+    SUMMON_ACCEPTED = "|cff888888(Accepted)|r",
 }
 
 local function eval_summon_status(unitID)
