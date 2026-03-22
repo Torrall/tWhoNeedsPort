@@ -5,6 +5,7 @@ local status_list = {}
 
 local SAFETY_MARGIN = 0.5 --seconds
 local KEEP_ACCEPTED_STATUS_FOR = 60.0 --seconds
+local SUMMON_DURATION = 120 --seconds
 
 local NO_SUMMON = "NO_SUMMON"
 local SUMMON_PENDING = "SUMMON_PENDING"
@@ -18,43 +19,47 @@ local STRING_MAPPING = {
 
 local function eval_summon_status(unitID)
     local guid = UnitGUID(unitID)
-    local time_left = C_PartyInfo.GetSummonConfirmTimeLeft(unitID) or 0
+    local has_summon = C_IncomingSummon.HasIncomingSummon(unitID) or false
 
-    -- first case: pending summon
-    if time_left > 0 then
+    local old_status
+    if not(status_list[guid]) then
+        old_status = NO_SUMMON
+    end
+
+    -- trivial case: no summon now and before
+    if old_status == NO_SUMMON and not(has_summon) then
+        return NO_SUMMON
+    end
+
+    -- first change case: has summon now but did not have last check -> fresh summon
+    if has_summon and old_status == NO_SUMMON then
         status_list[guid] = {
             status = SUMMON_PENDING,
-            expiration_time = GetTime() + time_left -SAFETY_MARGIN
+            expiration_time = GetTime() + SUMMON_DURATION - SAFETY_MARGIN
         }
         return SUMMON_PENDING
     end
-    -- second case: no summon pending and no old info
-    if not(status_list[guid]) then
-        return NO_SUMMON
-    end
 
-    -- from now on we can assume that there was an old status
-    local old_status = status_list[guid].status
-    local old_time_left = status_list[guid].expiration_time - GetTime()
-
-    -- third case no summon shown pending but there was one before - we assume accepted
-    if old_time_left > 0 and old_status == SUMMON_PENDING then
+    -- second change case: had summon but does not now -> assume accepted
+    if not(has_summon) and old_status == SUMMON_PENDING then
         status_list[guid] = {
             status = SUMMON_ACCEPTED,
-            expiration_time = GetTime() + KEEP_ACCEPTED_STATUS_FOR -SAFETY_MARGIN
+            expiration_time = GetTime() + KEEP_ACCEPTED_STATUS_FOR - SAFETY_MARGIN
         }
-        return SUMMON_ACCEPTED
+        return SUMMON_PENDING
     end
 
-
-    -- fourth case: something was pending (summon or accept) but has expired - cleanup
-    if old_time_left <= 0 then
+    -- something was pending (summon or accept) but has expired - cleanup
+    local time_left = status_list[guid].expiration_time - GetTime()
+    if time_left <= 0 then
         status_list[guid] = nil
         return NO_SUMMON
     end
+
+    return status_list[guid].status
 end
 
-function ns.GetSummonStatusString(unitID)
+function ns.GetSummonStatuswString(unitID)
     local status = eval_summon_status(unitID)
     return STRING_MAPPING[status]
 end
