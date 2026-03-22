@@ -24,6 +24,8 @@ local function eval_summon_status(unitID)
     local old_status
     if not(status_list[guid]) then
         old_status = NO_SUMMON
+    else
+        old_status = status_list[guid].status
     end
 
     -- trivial case: no summon now and before
@@ -59,7 +61,7 @@ local function eval_summon_status(unitID)
     return status_list[guid].status
 end
 
-function ns.GetSummonStatuswString(unitID)
+function ns.GetSummonStatusString(unitID)
     local status = eval_summon_status(unitID)
     return STRING_MAPPING[status]
 end
