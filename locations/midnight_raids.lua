@@ -15,7 +15,7 @@ ns.instances.the_voidspire = {
 
 ns.instances.the_dreamrift = {
     name = "The Dreamrift",
-    inside_ids = { 99999 },
+    inside_ids = { 2939 },
     outside_ids = { 2694 },
     outside_coordinates = {
         x = -1083,
