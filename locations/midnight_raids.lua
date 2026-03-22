@@ -5,7 +5,7 @@ ns.instances = ns.instances or {}
 
 ns.instances.the_voidspire = {
     name = "The Voidspire",
-    inside_ids = { 99999 },
+    inside_ids = { 2912 },
     outside_ids = { 2771 },
     outside_coordinates = {
         x = 252.69999694824,
