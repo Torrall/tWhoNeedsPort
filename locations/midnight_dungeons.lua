@@ -21,6 +21,7 @@ ns.instances.murder_row = {
         x = -4932.8999023438,
         y = 8629.2998046875,
     },
+    special_distance_threshold = 65,
 }
 
 ns.instances.windrunner_spire = {

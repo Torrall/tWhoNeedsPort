@@ -48,8 +48,11 @@ local function evaluate_member_instance(unit)
             min_distance = distance
         end
     end
+
     -- is the closest close enough?
-    if min_distance > DISTANCE_THRESHOLD then
+    local special_distance_threshold = ns.instances[closest_instance].special_distance_threshold
+    local applicable_distance_threshold = special_distance_threshold or DISTANCE_THRESHOLD
+    if min_distance > applicable_distance_threshold then
         return NO_INSTANCE_KEY
     end
     return closest_instance
