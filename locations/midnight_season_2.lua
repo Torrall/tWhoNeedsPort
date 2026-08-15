@@ -3,6 +3,15 @@ print("read " .. addon .. ": midnight_season_2.lua")
 
 ns.instances = ns.instances or {}
 
+ns.instances.altar_of_fangs = {
+    name = "Altar of Fangs",
+    inside_ids = { 99999 },
+    outside_ids = { 2916 },
+    outside_coordinates = {
+        x = -10400,
+        y = 4920,
+    },
+}
 
 --[[
 
