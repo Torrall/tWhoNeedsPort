@@ -13,6 +13,16 @@ ns.instances.altar_of_fangs = {
     },
 }
 
+ns.instances.kings_rest = {
+    name = "Kings' Rest",
+    inside_ids = { 1762 },
+    outside_ids = { 1642 },
+    outside_coordinates = {
+        x = 2512,
+        y = -861,
+    },
+}
+
 --[[
 
 ns.instances.template_dungeon = {
