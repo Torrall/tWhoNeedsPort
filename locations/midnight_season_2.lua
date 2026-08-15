@@ -23,6 +23,26 @@ ns.instances.kings_rest = {
     },
 }
 
+ns.instances.temple_of_sethraliss = {
+    name = "Temple of Sethraliss",
+    inside_ids = { 1877 },
+    outside_ids = { 1642 },
+    outside_coordinates = {
+        x = 3147,
+        y = 3170,
+    },
+}
+
+ns.instances.ruby_life_pools = {
+    name = "Ruby Life Pools",
+    inside_ids = { 2521 },
+    outside_ids = { 2444 },
+    outside_coordinates = {
+        x = -140,
+        y = 1338,
+    },
+}
+
 --[[
 
 ns.instances.template_dungeon = {
