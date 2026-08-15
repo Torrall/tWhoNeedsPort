@@ -5,7 +5,7 @@ ns.instances = ns.instances or {}
 
 ns.instances.altar_of_fangs = {
     name = "Altar of Fangs",
-    inside_ids = { 99999 },
+    inside_ids = { 2993 },
     outside_ids = { 2916 },
     outside_coordinates = {
         x = -10400,
