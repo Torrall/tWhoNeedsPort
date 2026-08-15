@@ -33,6 +33,15 @@ ns.instances.march_on_quel_danas = {
     },
 }
 
+ns.instances.the_venomous_abyss = {
+    name = "The Venomous Abyss",
+    inside_ids = { 99999 },
+    outside_ids = { 2916 },
+    outside_coordinates = {
+        x = -10414.6,
+        y = 5781.1,
+    },
+}
 --[[
 
 ns.instances.template_raid = {

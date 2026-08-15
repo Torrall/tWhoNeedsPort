@@ -8,6 +8,7 @@
 locations\midnight_dungeons.lua
 locations\midnight_raids.lua
 locations\midnight_season_1.lua
+locations\midnight_season_2.lua
 main.lua
 port_status.lua
 broker.lua
