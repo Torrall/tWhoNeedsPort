@@ -35,7 +35,7 @@ ns.instances.march_on_quel_danas = {
 
 ns.instances.the_venomous_abyss = {
     name = "The Venomous Abyss",
-    inside_ids = { 99999 },
+    inside_ids = { 3004 },
     outside_ids = { 2916 },
     outside_coordinates = {
         x = -10414.6,
