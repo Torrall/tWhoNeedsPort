@@ -42,6 +42,16 @@ ns.instances.the_venomous_abyss = {
         y = 5781.1,
     },
 }
+
+ns.instances.the_tidebound_grotto = {
+    name = "The Tidebound Grotto",
+    inside_ids = { 2987 },
+    outside_ids = { 0 },
+    outside_coordinates = {
+        x = -12203,
+        y = 4975,
+    },
+}
 --[[
 
 ns.instances.template_raid = {
