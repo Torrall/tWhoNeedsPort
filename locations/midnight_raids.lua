@@ -52,6 +52,16 @@ ns.instances.the_tidebound_grotto = {
         y = 4975,
     },
 }
+
+ns.instances.kithix = {
+    name = "The unbinding of Kith'ix",
+    inside_ids = { 3095 },
+    outside_ids = { 2916 },
+    outside_coordinates = {
+        x = -10505,
+        y = 6370,
+    },
+}
 --[[
 
 ns.instances.template_raid = {
@@ -63,5 +73,7 @@ ns.instances.template_raid = {
         y = 0.0,
     },
 }
-
+[22:00:33] zone 2916
+[22:00:33] x = -10505.600585938 ,
+[22:00:33] y =  6370.1000976562 ,
 ]]
